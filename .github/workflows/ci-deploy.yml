@@ -5,6 +5,7 @@ on:
     branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
+  workflow_dispatch:    # позволяет запускать вручную
 
 jobs:
   test:
@@ -22,7 +23,7 @@ jobs:
 
   deploy-heroku:
     needs: test
-    if: github.ref == 'refs/heads/main' && contains(fromJson('["heroku"]'), 'heroku') == false # placeholder to skip unless configured
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -35,7 +36,7 @@ jobs:
 
   deploy-render:
     needs: test
-    if: github.ref == 'refs/heads/main' && contains(fromJson('["render"]'), 'render') == false # placeholder to skip unless configured
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
