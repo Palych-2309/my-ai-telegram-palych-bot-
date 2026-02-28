@@ -51,3 +51,16 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     # Сохраняем ответ ассистента и отправляем пользователю
     append_assistant_message(user_id, reply)
+# Разбить длинный ответ на части, если нужно
+    MAX = 4000
+    for i in range(0, len(reply), MAX):
+        await update.message.reply_text(reply[i:i+MAX])
+
+if __name__ == "__main__":
+    app = ApplicationBuilder().token(BOT_TOKEN).build()
+    app.add_handler(CommandHandler("start", start))
+    app.add_handler(CommandHandler("help", help_cmd))
+    app.add_handler(CommandHandler("reset", reset_cmd))
+    app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_message))
+    print("Bot starting (polling)...")
+    app.run_polling()
