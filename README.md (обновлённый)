@@ -1,0 +1,48 @@
+# my-ai-telegram-palych-bot
+
+AI‑бот для Telegram на Python с использованием OpenAI + Redis (сессии).
+
+## Быстрый старт (локально)
+
+1. Клонировать:
+   git clone git@github.com:Palych-2309/my-ai-telegram-palych-bot.git
+   cd my-ai-telegram-palych-bot
+
+2. Создать .env (по шаблону .env.example) и заполнить BOT_TOKEN, OPENAI_API_KEY и REDIS_URL.
+
+3. Установить зависимости:
+   python -m venv venv
+   source venv/bin/activate
+   pip install -r requirements.txt
+
+4. Запустить локально:
+   python bot.py
+
+## Docker
+
+1. docker build -t my-ai-bot .
+
+2. docker run -e BOT_TOKEN=... -e OPENAI_API_KEY=... -e REDIS_URL=... my-ai-bot
+## Heroku (быстро)
+
+1. heroku create your-app-name
+
+2. heroku config:set BOT_TOKEN=... OPENAI_API_KEY=... REDIS_URL=...
+
+3. git push heroku main
+
+4. активируй worker dyno: heroku ps:scale worker=1
+
+## Render
+
+1. Создай Background Worker service (Render).
+
+2. Подключи репозиторий.
+
+3. В настройках сервиса добавь переменные окружения (BOT_TOKEN, OPENAI_API_KEY, REDIS_URL).
+
+4. Деплой через UI.
+
+## Секреты и безопасность
+- Не хранить .env в репозитории.
+- Ограничение длины сообщений уже есть. Для продакшена — добавь rate limiting и фильтры контента.
