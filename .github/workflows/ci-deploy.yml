@@ -23,7 +23,7 @@ jobs:
 
   deploy-heroku:
     needs: test
-    if: github.ref == 'refs/heads/main'
+if: github.ref == 'refs/heads/main' && secrets.RENDER_API_KEY != ''
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
