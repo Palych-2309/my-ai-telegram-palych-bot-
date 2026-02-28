@@ -5,7 +5,7 @@ on:
     branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
-  workflow_dispatch:    # позволяет запускать вручную
+  workflow_dispatch:
 
 jobs:
   test:
@@ -23,7 +23,7 @@ jobs:
 
   deploy-heroku:
     needs: test
-if: github.ref == 'refs/heads/main' && secrets.RENDER_API_KEY != ''
+    if: github.ref == 'refs/heads/main' && secrets.HEROKU_API_KEY != ''
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -36,7 +36,7 @@ if: github.ref == 'refs/heads/main' && secrets.RENDER_API_KEY != ''
 
   deploy-render:
     needs: test
-    if: github.ref == 'refs/heads/main'
+    if: github.ref == 'refs/heads/main' && secrets.RENDER_API_KEY != ''
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
