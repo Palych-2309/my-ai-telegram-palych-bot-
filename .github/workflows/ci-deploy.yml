@@ -23,11 +23,12 @@ jobs:
 
   deploy-heroku:
     needs: test
-    if: github.ref == 'refs/heads/main' && secrets.HEROKU_API_KEY != ''
+    if: github.ref == 'refs/heads/main'    # только ветка main для job
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - name: Deploy to Heroku
+        if: ${{ secrets.HEROKU_API_KEY != '' }}   # проверка секрета на уровне шага
         uses: akhileshns/heroku-deploy@v3.12.12
         with:
           heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
@@ -36,11 +37,12 @@ jobs:
 
   deploy-render:
     needs: test
-    if: github.ref == 'refs/heads/main' && secrets.RENDER_API_KEY != ''
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - name: Deploy to Render
+        if: ${{ secrets.RENDER_API_KEY != '' }}
         uses: render-examples/deploy@v1
         with:
           api_key: ${{ secrets.RENDER_API_KEY }}
